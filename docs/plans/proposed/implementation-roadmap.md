@@ -17,10 +17,12 @@
   - Note: `amzn.to` short URLs require redirect resolution (handled by redirect phase)
   - Implemented in `Link.Canonical.Rules.Amazon`
 
-- [ ] **Twitter/X** - `twitter.com` → `x.com`
+- [x] **Twitter/X** - `twitter.com` → `x.com`
   - Canonical: `https://x.com/{user}/status/{id}`
-  - Variants: `twitter.com`, `mobile.twitter.com`, `/photo/1`, `/video/1` suffixes
+  - Variants: `twitter.com`, `www.twitter.com`, `mobile.twitter.com`
+  - Strips `/photo/N` and `/video/N` suffixes from status URLs
   - Strip: `s`, `t`, `ref_src`
+  - Implemented in `Link.Canonical.Rules.Twitter`
 
 - [ ] **GitHub** - www stripping, preserve line fragments
   - Canonical: `https://github.com/{owner}/{repo}[/path]`
