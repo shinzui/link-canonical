@@ -1,5 +1,6 @@
 module Main (main) where
 
+import Link.Canonical.AmazonSpec qualified as AmazonSpec
 import Link.Canonical.NormalizeSpec qualified as NormalizeSpec
 import Link.Canonical.TrackingSpec qualified as TrackingSpec
 import Link.Canonical.YouTubeSpec qualified as YouTubeSpec
@@ -14,5 +15,6 @@ tests =
     "link-canonical"
     [ NormalizeSpec.tests,
       TrackingSpec.tests,
-      YouTubeSpec.tests
+      YouTubeSpec.tests,
+      AmazonSpec.tests
     ]

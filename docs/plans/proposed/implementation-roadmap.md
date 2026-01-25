@@ -10,10 +10,12 @@
   - Strip: `t`, `start`, `end`, `feature`, `list`, `index`, `si`
   - Implemented in `Link.Canonical.Rules.YouTube`
 
-- [ ] **Amazon** - `amzn.to`, `/gp/product/` → `/dp/{ASIN}`
-  - Canonical: `https://www.amazon.com/dp/{ASIN}`
-  - Variants: `/gp/product/{ASIN}`, `/{product-name}/dp/{ASIN}`
-  - Strip: `tag`, `ref`, `psc`, `keywords`, `qid`, `sr`
+- [x] **Amazon** - `/gp/product/` → `/dp/{ASIN}`
+  - Canonical: `https://www.amazon.{TLD}/dp/{ASIN}` (preserves regional TLD)
+  - Variants: `/gp/product/{ASIN}`, `/{product-name}/dp/{ASIN}`, `smile.amazon.*`
+  - Strip: `tag`, `ref`, `psc`, `keywords`, `qid`, `sr`, `th`, `linkCode`, `camp`, `creative`
+  - Note: `amzn.to` short URLs require redirect resolution (handled by redirect phase)
+  - Implemented in `Link.Canonical.Rules.Amazon`
 
 - [ ] **Twitter/X** - `twitter.com` → `x.com`
   - Canonical: `https://x.com/{user}/status/{id}`

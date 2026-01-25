@@ -59,6 +59,7 @@ library
     Link.Canonical.Normalize
     Link.Canonical.Prelude
     Link.Canonical.Redirect
+    Link.Canonical.Rules.Amazon
     Link.Canonical.Rules.YouTube
     Link.Canonical.Tracking
 
@@ -83,6 +84,7 @@ test-suite link-canonical-test
   hs-source-dirs: test
   main-is: Main.hs
   other-modules:
+    Link.Canonical.AmazonSpec
     Link.Canonical.NormalizeSpec
     Link.Canonical.TrackingSpec
     Link.Canonical.YouTubeSpec

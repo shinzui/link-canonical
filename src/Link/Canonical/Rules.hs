@@ -17,9 +17,11 @@ module Link.Canonical.Rules
 
     -- * Individual rules
     youtubeRule,
+    amazonRule,
   )
 where
 
+import Link.Canonical.Rules.Amazon (amazonRule)
 import Link.Canonical.Rules.Types
 import Link.Canonical.Rules.YouTube (youtubeRule)
 
@@ -29,9 +31,9 @@ import Link.Canonical.Rules.YouTube (youtubeRule)
 --
 -- Included rules:
 -- - YouTube (youtu.be, youtube.com variants)
+-- - Amazon (amazon.* regional variants)
 --
 -- Planned rules:
--- - Amazon (amzn.to, amazon.* variants)
 -- - Twitter/X (twitter.com → x.com)
 -- - Instagram
 -- - Reddit
@@ -39,5 +41,6 @@ import Link.Canonical.Rules.YouTube (youtubeRule)
 -- - GitHub
 defaultDomainRules :: [DomainRule]
 defaultDomainRules =
-  [ youtubeRule
+  [ youtubeRule,
+    amazonRule
   ]
