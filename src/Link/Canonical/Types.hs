@@ -14,7 +14,6 @@ module Link.Canonical.Types
   )
 where
 
-import Data.Set qualified as Set
 import Link.Canonical.Prelude
 
 -- | Result of URL normalization
@@ -114,16 +113,3 @@ data NormHooks m = NormHooks
     onNormComplete :: NormTrace -> m ()
   }
   deriving stock (Generic)
-
--- | Default hooks that do nothing
-instance (Applicative m) => Default (NormHooks m) where
-  def =
-    NormHooks
-      { onRedirectStep = \_ _ -> pure (),
-        onRuleApplied = \_ _ _ -> pure (),
-        onNormComplete = \_ -> pure ()
-      }
-
--- | Simple Default class for providing default values
-class Default a where
-  def :: a

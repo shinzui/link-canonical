@@ -90,7 +90,6 @@ import Link.Canonical.Prelude
 import Link.Canonical.Redirect (resolveFinalUriWithChain)
 import Link.Canonical.Rules
 import Link.Canonical.Types
-import Text.URI (mkURI)
 
 -- | Normalize a URL with full redirect resolution
 --
@@ -109,7 +108,7 @@ import Text.URI (mkURI)
 -- result <- normalizeLink config httpClient uri
 -- @
 normalizeLink ::
-  (HttpClient m, MonadIO m, MonadCatch m) =>
+  (HttpClient m) =>
   NormConfig ->
   URI ->
   m (Either NormError NormResult)
@@ -146,7 +145,7 @@ normalizeLink config uri = do
 --   Right res -> useCanonical (res ^. #canonical)
 -- @
 normalizeWithDefaults ::
-  (HttpClient m, MonadIO m, MonadCatch m) =>
+  (HttpClient m) =>
   URI ->
   m (Either NormError URI)
 normalizeWithDefaults uri = do

@@ -16,7 +16,7 @@ where
 import Data.Set qualified as Set
 import Data.Text qualified as T
 import Link.Canonical.Error (HttpClientError, RedirectError (..))
-import Link.Canonical.Http (HttpClient (..), HttpResponse (..))
+import Link.Canonical.Http (HttpClient (..))
 import Link.Canonical.Prelude
 import Link.Canonical.Types (RedirectConfig (..))
 import Network.HTTP.Types (Status, statusCode)
@@ -24,7 +24,7 @@ import Text.URI qualified as URI
 
 -- | Resolve the final URI after following redirects
 resolveFinalUri ::
-  (HttpClient m, Monad m) =>
+  (HttpClient m) =>
   RedirectConfig ->
   URI ->
   m (Either RedirectError URI)
@@ -34,7 +34,7 @@ resolveFinalUri config uri = do
 
 -- | Resolve the final URI and return the redirect chain
 resolveFinalUriWithChain ::
-  (HttpClient m, Monad m) =>
+  (HttpClient m) =>
   RedirectConfig ->
   URI ->
   m (Either RedirectError (URI, [URI]))
@@ -71,8 +71,8 @@ resolveFinalUriWithChain config uri = go Set.empty [] 0 uri
     checkPrivateIP cfg u =
       (cfg ^. #blockPrivateIPs) && isPrivateIP u
 
-    checkDowngrade cfg from to =
-      not (cfg ^. #allowDowngrade) && isSchemeDowngrade from to
+    checkDowngrade cfg fromUri toUri =
+      not (cfg ^. #allowDowngrade) && isSchemeDowngrade fromUri toUri
 
 -- | Check if a status code is a redirect (3xx)
 isRedirectStatus :: Status -> Bool
@@ -88,9 +88,9 @@ isSuccessStatus s =
 
 -- | Check if going from one URI to another is a scheme downgrade
 isSchemeDowngrade :: URI -> URI -> Bool
-isSchemeDowngrade from to =
-  let fromScheme = fmap (T.toLower . URI.unRText) $ URI.uriScheme from
-      toScheme = fmap (T.toLower . URI.unRText) $ URI.uriScheme to
+isSchemeDowngrade fromUri toUri =
+  let fromScheme = fmap (T.toLower . URI.unRText) $ URI.uriScheme fromUri
+      toScheme = fmap (T.toLower . URI.unRText) $ URI.uriScheme toUri
    in fromScheme == Just "https" && toScheme == Just "http"
 
 -- | Check if a URI points to a private IP address
@@ -124,8 +124,8 @@ isPrivate172 :: Text -> Bool
 isPrivate172 host
   | "172." `T.isPrefixOf` host =
       case T.splitOn "." host of
-        (_ : second : _) ->
-          case reads (T.unpack second) :: [(Int, String)] of
+        (_ : secondOctet : _) ->
+          case reads (T.unpack secondOctet) :: [(Int, String)] of
             [(n, "")] -> n >= 16 && n <= 31
             _ -> False
         _ -> False

@@ -88,10 +88,8 @@ test-suite link-canonical-test
   build-depends:
     base,
     containers,
-    hedgehog >=1.4 && <1.6,
     link-canonical,
     modern-uri,
     tasty >=1.5 && <1.6,
-    tasty-hedgehog >=1.4 && <1.5,
     tasty-hunit >=0.10 && <0.11,
     text,

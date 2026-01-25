@@ -143,7 +143,7 @@ applyTrailingSlashPolicy Add path =
         then path -- already has trailing
         else case URI.mkPathPiece "" of
           Nothing -> path
-          Just empty -> Just (True, segments <> (empty :| []))
+          Just emptyPiece -> Just (True, segments <> (emptyPiece :| []))
     Nothing -> Nothing
 
 -- | Normalize query parameters

@@ -17,7 +17,6 @@ module Link.Canonical.Rules
   )
 where
 
-import Link.Canonical.Prelude
 import Link.Canonical.Rules.Types
 
 -- | Default set of domain rules
