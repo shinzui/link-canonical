@@ -24,10 +24,11 @@
   - Strip: `s`, `t`, `ref_src`
   - Implemented in `Link.Canonical.Rules.Twitter`
 
-- [ ] **GitHub** - www stripping, preserve line fragments
+- [x] **GitHub** - www stripping, preserve line fragments
   - Canonical: `https://github.com/{owner}/{repo}[/path]`
-  - Preserve: `#L123` line number fragments
+  - Preserve: `#L123`, `#L10-L20` line number fragments (exception to fragment stripping)
   - Strip: `tab`, `ref_src`, `ref_source`
+  - Implemented in `Link.Canonical.Rules.GitHub`
 
 - [ ] **Instagram** - normalize to www
   - Canonical: `https://www.instagram.com/p/{POST_ID}/`
