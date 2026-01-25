@@ -59,6 +59,7 @@ library
     Link.Canonical.Normalize
     Link.Canonical.Prelude
     Link.Canonical.Redirect
+    Link.Canonical.Rules.YouTube
     Link.Canonical.Tracking
 
   build-depends:
@@ -84,6 +85,7 @@ test-suite link-canonical-test
   other-modules:
     Link.Canonical.NormalizeSpec
     Link.Canonical.TrackingSpec
+    Link.Canonical.YouTubeSpec
 
   build-depends:
     base,
