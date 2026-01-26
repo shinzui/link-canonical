@@ -69,9 +69,16 @@
 
 ### Testing
 
-- [ ] Redirect resolution tests
-- [ ] Domain rule tests (per rule)
-- [ ] Edge case tests
+- [x] Redirect resolution tests
+  - Status code detection, scheme downgrade, private IP blocking
+  - Mock HTTP client for redirect chain testing
+  - Implemented in `test/Link/Canonical/RedirectSpec.hs`
+- [x] Domain rule tests (per rule)
+  - Each rule has dedicated spec: YouTubeSpec, AmazonSpec, TwitterSpec, GitHubSpec, InstagramSpec, RedditSpec
+- [x] Edge case tests
+  - Empty/minimal URLs, case sensitivity, special characters
+  - Path normalization, query parameter, fragment handling
+  - Implemented in `test/Link/Canonical/EdgeCaseSpec.hs`
 
 ## Lower Priority
 

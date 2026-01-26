@@ -51,6 +51,7 @@ library
     Link.Canonical.Config
     Link.Canonical.Error
     Link.Canonical.Http
+    Link.Canonical.Redirect
     Link.Canonical.Rules
     Link.Canonical.Rules.Types
     Link.Canonical.Types
@@ -58,7 +59,6 @@ library
   other-modules:
     Link.Canonical.Normalize
     Link.Canonical.Prelude
-    Link.Canonical.Redirect
     Link.Canonical.Rules.Amazon
     Link.Canonical.Rules.GitHub
     Link.Canonical.Rules.Instagram
@@ -89,10 +89,12 @@ test-suite link-canonical-test
   main-is: Main.hs
   other-modules:
     Link.Canonical.AmazonSpec
+    Link.Canonical.EdgeCaseSpec
     Link.Canonical.GitHubSpec
     Link.Canonical.InstagramSpec
     Link.Canonical.NormalizeSpec
     Link.Canonical.RedditSpec
+    Link.Canonical.RedirectSpec
     Link.Canonical.TrackingSpec
     Link.Canonical.TwitterSpec
     Link.Canonical.YouTubeSpec
@@ -100,8 +102,10 @@ test-suite link-canonical-test
   build-depends:
     base,
     containers,
+    http-types,
     link-canonical,
     modern-uri,
+    mtl,
     tasty >=1.5 && <1.6,
     tasty-hunit >=0.10 && <0.11,
     text,
