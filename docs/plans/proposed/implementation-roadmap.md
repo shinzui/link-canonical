@@ -48,9 +48,10 @@
   - Remove `.` and `..` segments from paths
   - Implemented in `Link.Canonical.Normalize.normalizeDotSegments`
 
-- [ ] **Percent-encoding normalization**
+- [x] **Percent-encoding normalization**
   - Uppercase hex digits: `%2f` → `%2F`
   - Decode unreserved characters: `%41` → `A`
+  - Handled by modern-uri library during parsing
 
 ## Medium Priority
 

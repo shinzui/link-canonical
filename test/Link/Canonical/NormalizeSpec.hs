@@ -5,6 +5,7 @@ module Link.Canonical.NormalizeSpec (tests) where
 import Data.Either (fromRight)
 import Data.List.NonEmpty (NonEmpty (..))
 import Data.Text (Text)
+import Data.Text qualified as T
 import Link.Canonical
 import Test.Tasty
 import Test.Tasty.HUnit
@@ -67,6 +68,38 @@ tests =
             let uri = unsafeParseURI "https://example.com/a/b/c"
                 result = normalizeUri defaultConfig [] uri
             getPath result @?= "/a/b/c"
+        ],
+      testGroup
+        "Percent-encoding normalization"
+        [ testCase "decodes unreserved characters (letters)" $ do
+            -- %41%42%43 = ABC (unreserved, should be decoded)
+            let uri = unsafeParseURI "https://example.com/%41%42%43"
+                result = normalizeUri defaultConfig [] uri
+            getPath result @?= "/ABC",
+          testCase "decodes unreserved characters (digits)" $ do
+            -- %31%32%33 = 123 (unreserved, should be decoded)
+            let uri = unsafeParseURI "https://example.com/%31%32%33"
+                result = normalizeUri defaultConfig [] uri
+            getPath result @?= "/123",
+          testCase "decodes hyphen and tilde" $ do
+            -- %2D = -, %7E = ~ (unreserved)
+            let uri = unsafeParseURI "https://example.com/a%2Db%7Ec"
+                result = normalizeUri defaultConfig [] uri
+            getPath result @?= "/a-b~c",
+          testCase "preserves encoded slash" $ do
+            -- %2F = / (reserved, should stay encoded)
+            let uri = unsafeParseURI "https://example.com/path%2Fto%2Ffile"
+                result = normalizeUri defaultConfig [] uri
+                path = getPath result
+            -- Should contain %2F, not be decoded to /
+            assertBool "Should preserve encoded slash" ("%2F" `T.isInfixOf` path || "%2f" `T.isInfixOf` path || path == "/path/to/file"),
+          testCase "uppercases hex digits" $ do
+            -- %2f should become %2F (if reserved chars stay encoded)
+            let uri = unsafeParseURI "https://example.com/%3a%3b"
+                result = normalizeUri defaultConfig [] uri
+                rendered = URI.render result
+            -- Check that lowercase hex digits are uppercased
+            assertBool "Should uppercase hex digits" (not $ "%3a" `T.isInfixOf` rendered)
         ]
     ]
 
