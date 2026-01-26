@@ -30,10 +30,11 @@
   - Strip: `tab`, `ref_src`, `ref_source`
   - Implemented in `Link.Canonical.Rules.GitHub`
 
-- [ ] **Instagram** - normalize to www
-  - Canonical: `https://www.instagram.com/p/{POST_ID}/`
+- [x] **Instagram** - normalize to www
+  - Canonical: `https://www.instagram.com/p/{POST_ID}/`, `/reel/{ID}/`, `/{username}/`
   - Variants: `instagram.com` → `www.instagram.com`
-  - Strip: `igshid`, `utm_*`
+  - Strip: `igshid` (utm_* handled by global tracking)
+  - Implemented in `Link.Canonical.Rules.Instagram`
 
 - [ ] **Reddit** - normalize subdomains
   - Canonical: `https://www.reddit.com/r/{subreddit}/comments/{id}/{slug}/`

@@ -20,11 +20,13 @@ module Link.Canonical.Rules
     amazonRule,
     twitterRule,
     githubRule,
+    instagramRule,
   )
 where
 
 import Link.Canonical.Rules.Amazon (amazonRule)
 import Link.Canonical.Rules.GitHub (githubRule)
+import Link.Canonical.Rules.Instagram (instagramRule)
 import Link.Canonical.Rules.Twitter (twitterRule)
 import Link.Canonical.Rules.Types
 import Link.Canonical.Rules.YouTube (youtubeRule)
@@ -38,9 +40,9 @@ import Link.Canonical.Rules.YouTube (youtubeRule)
 -- - Amazon (amazon.* regional variants)
 -- - Twitter/X (twitter.com → x.com)
 -- - GitHub (www.github.com → github.com, preserves line fragments)
+-- - Instagram (instagram.com → www.instagram.com)
 --
 -- Planned rules:
--- - Instagram
 -- - Reddit
 -- - LinkedIn
 defaultDomainRules :: [DomainRule]
@@ -48,5 +50,6 @@ defaultDomainRules =
   [ youtubeRule,
     amazonRule,
     twitterRule,
-    githubRule
+    githubRule,
+    instagramRule
   ]

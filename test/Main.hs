@@ -2,6 +2,7 @@ module Main (main) where
 
 import Link.Canonical.AmazonSpec qualified as AmazonSpec
 import Link.Canonical.GitHubSpec qualified as GitHubSpec
+import Link.Canonical.InstagramSpec qualified as InstagramSpec
 import Link.Canonical.NormalizeSpec qualified as NormalizeSpec
 import Link.Canonical.TrackingSpec qualified as TrackingSpec
 import Link.Canonical.TwitterSpec qualified as TwitterSpec
@@ -20,5 +21,6 @@ tests =
       YouTubeSpec.tests,
       AmazonSpec.tests,
       TwitterSpec.tests,
-      GitHubSpec.tests
+      GitHubSpec.tests,
+      InstagramSpec.tests
     ]
