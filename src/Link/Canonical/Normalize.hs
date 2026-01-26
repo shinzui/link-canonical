@@ -115,8 +115,48 @@ normalizePath policy uri =
    in uri {URI.uriPath = withPolicy}
 
 -- | Remove dot segments from path (. and ..)
+--
+-- Implements RFC 3986 Section 5.2.4
+--
+-- Examples:
+-- @
+-- /a/b/c/./../../g  →  /a/g
+-- /mid/content=5/../6  →  /mid/6
+-- /../foo  →  /foo
+-- @
 normalizeDotSegments :: Maybe (Bool, NonEmpty (URI.RText 'URI.PathPiece)) -> Maybe (Bool, NonEmpty (URI.RText 'URI.PathPiece))
-normalizeDotSegments = id -- TODO: implement RFC 3986 Section 5.2.4
+normalizeDotSegments Nothing = Nothing
+normalizeDotSegments (Just (trailing, segments)) =
+  let segList = toList segments
+      segTexts = map URI.unRText segList
+      -- Process dot segments
+      processed = removeDotSegments [] segTexts
+      -- Determine if result should have trailing slash
+      -- If the last segment was "." or "..", result needs trailing slash
+      lastWasDot = case segTexts of
+        [] -> False
+        xs -> L.last xs `elem` [".", ".."]
+      newTrailing = trailing || lastWasDot
+   in case processed of
+        [] -> Nothing
+        (x : xs) -> case traverse URI.mkPathPiece (x :| xs) of
+          Nothing -> Just (trailing, segments) -- fallback to original if creation fails
+          Just newSegs -> Just (newTrailing, newSegs)
+
+-- | Remove dot segments following RFC 3986 algorithm
+--
+-- Processes segments left-to-right:
+-- - "." segments are skipped (removed)
+-- - ".." segments pop the last segment from the output
+-- - Other segments are added to the output
+removeDotSegments :: [Text] -> [Text] -> [Text]
+removeDotSegments output [] = reverse output
+removeDotSegments output (seg : rest)
+  | seg == "." = removeDotSegments output rest
+  | seg == ".." = case output of
+      [] -> removeDotSegments [] rest -- can't go above root
+      (_ : xs) -> removeDotSegments xs rest
+  | otherwise = removeDotSegments (seg : output) rest
 
 -- | Apply trailing slash policy to path
 applyTrailingSlashPolicy :: TrailingSlash -> Maybe (Bool, NonEmpty (URI.RText 'URI.PathPiece)) -> Maybe (Bool, NonEmpty (URI.RText 'URI.PathPiece))

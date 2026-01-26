@@ -44,9 +44,9 @@
 
 ### Normalization
 
-- [ ] **Dot segment normalization** - RFC 3986 Section 5.2.4
+- [x] **Dot segment normalization** - RFC 3986 Section 5.2.4
   - Remove `.` and `..` segments from paths
-  - Located at `Normalize.hs:119`
+  - Implemented in `Link.Canonical.Normalize.normalizeDotSegments`
 
 - [ ] **Percent-encoding normalization**
   - Uppercase hex digits: `%2f` → `%2F`
