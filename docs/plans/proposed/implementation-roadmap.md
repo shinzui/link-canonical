@@ -57,15 +57,20 @@
 
 ### Tracking Parameters
 
-- [ ] Add missing default patterns:
+- [x] Add missing default patterns:
   - `mc_*` (Mailchimp)
   - `oly_*` (Omeda)
-  - `_ga`, `_gl` (Google Analytics)
+  - `_ga`, `_gl`, `_gid` (Google Analytics)
   - `msclkid` (Microsoft Ads)
   - `dclid` (DoubleClick)
   - `zanpid` (Zanox)
-  - `igshid` (Instagram)
+  - `igshid`, `ig_*` (Instagram)
   - `si` (Spotify)
+  - `twclid` (Twitter)
+  - `hsa_*`, `_hsenc`, `_hsmi` (HubSpot)
+  - `mkt_tok` (Marketo)
+  - `sc_*`, `icid` (Adobe)
+  - Implemented in `Link.Canonical.Config.defaultTrackingParams`
 
 ### Testing
 

@@ -58,7 +58,60 @@ tests =
         let uri = unsafeParseURI "https://example.com/?page=1&sort=desc&filter=active"
             result = normalizeUri defaultConfig [] uri
             keys = getParamKeys result
-        keys @?= ["filter", "page", "sort"]
+        keys @?= ["filter", "page", "sort"],
+      testGroup
+        "Additional tracking patterns"
+        [ testCase "strips _ga and _gl (Google Analytics)" $ do
+            let uri = unsafeParseURI "https://example.com/?_ga=1.2.3&_gl=abc&id=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["id"],
+          testCase "strips msclkid (Microsoft Ads)" $ do
+            let uri = unsafeParseURI "https://example.com/?msclkid=abc123&page=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["page"],
+          testCase "strips dclid (DoubleClick)" $ do
+            let uri = unsafeParseURI "https://example.com/?dclid=xyz789&id=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["id"],
+          testCase "strips oly_* (Omeda)" $ do
+            let uri = unsafeParseURI "https://example.com/?oly_anon_id=abc&oly_enc_id=def&id=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["id"],
+          testCase "strips zanpid (Zanox)" $ do
+            let uri = unsafeParseURI "https://example.com/?zanpid=123456&page=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["page"],
+          testCase "strips igshid (Instagram)" $ do
+            let uri = unsafeParseURI "https://example.com/?igshid=abc123&post=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["post"],
+          testCase "strips si (Spotify)" $ do
+            let uri = unsafeParseURI "https://example.com/?si=abc123def&track=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["track"],
+          testCase "strips twclid (Twitter)" $ do
+            let uri = unsafeParseURI "https://example.com/?twclid=abc&id=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["id"],
+          testCase "strips hsa_* (HubSpot)" $ do
+            let uri = unsafeParseURI "https://example.com/?hsa_cam=123&hsa_grp=456&id=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["id"],
+          testCase "strips mkt_tok (Marketo)" $ do
+            let uri = unsafeParseURI "https://example.com/?mkt_tok=abc123&page=1"
+                result = normalizeUri defaultConfig [] uri
+                keys = getParamKeys result
+            keys @?= ["page"]
+        ]
     ]
 
 -- Helper functions
