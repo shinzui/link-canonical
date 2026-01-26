@@ -36,10 +36,11 @@
   - Strip: `igshid` (utm_* handled by global tracking)
   - Implemented in `Link.Canonical.Rules.Instagram`
 
-- [ ] **Reddit** - normalize subdomains
+- [x] **Reddit** - normalize subdomains
   - Canonical: `https://www.reddit.com/r/{subreddit}/comments/{id}/{slug}/`
   - Variants: `old.reddit.com`, `np.reddit.com` → `www.reddit.com`
   - Strip: `utm_*`, `ref`, `ref_source`
+  - Implemented in `Link.Canonical.Rules.Reddit`
 
 ### Normalization
 
