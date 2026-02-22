@@ -15,6 +15,7 @@ maintainer: Nadeem Bitar
 category: Web, Network
 build-type: Simple
 extra-doc-files:
+  CHANGELOG.md
   README.md
   docs/architecture/v1.md
 
