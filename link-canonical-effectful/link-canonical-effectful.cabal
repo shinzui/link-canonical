@@ -47,7 +47,7 @@ library
   build-depends:
     base >=4.18 && <5,
     effectful-core >=2.5 && <2.6,
-    link-canonical,
+    link-canonical >=0.1 && <0.2,
     modern-uri >=0.3 && <0.4,
 
 test-suite link-canonical-effectful-test
@@ -60,7 +60,7 @@ test-suite link-canonical-effectful-test
     containers >=0.6 && <0.8,
     effectful-core >=2.5 && <2.6,
     http-types >=0.12 && <0.13,
-    link-canonical,
+    link-canonical >=0.1 && <0.2,
     link-canonical-effectful,
     tasty >=1.4 && <1.6,
     tasty-hunit >=0.10 && <0.11,
