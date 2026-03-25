@@ -34,10 +34,33 @@ common common
     OverloadedLabels
     OverloadedStrings
     StrictData
+    TypeFamilies
+    UndecidableInstances
 
 library
   import: common
   hs-source-dirs: src
+  exposed-modules:
+    Effectful.Link.Canonical
+    Effectful.Link.Canonical.Http
+
   build-depends:
     base >=4.18 && <5,
+    effectful-core >=2.5 && <2.6,
     link-canonical,
+    modern-uri >=0.3 && <0.4,
+
+test-suite link-canonical-effectful-test
+  import: common
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Main.hs
+  build-depends:
+    base >=4.18 && <5,
+    containers >=0.6 && <0.8,
+    effectful-core >=2.5 && <2.6,
+    http-types >=0.12 && <0.13,
+    link-canonical,
+    link-canonical-effectful,
+    tasty >=1.4 && <1.6,
+    tasty-hunit >=0.10 && <0.11,
