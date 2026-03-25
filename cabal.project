@@ -1,2 +1,5 @@
-packages: .
+packages:
+  link-canonical
+  link-canonical-effectful
+
 tests: True

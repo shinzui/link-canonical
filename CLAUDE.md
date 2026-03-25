@@ -17,12 +17,19 @@ link-canonical is a Haskell library for URL canonicalization. It converts arbitr
 - **HTTP:** http-client / http-client-tls
 - **Lenses:** generic-lens + lens (uses OverloadedLabels)
 
+## Repository Layout
+
+This is a multi-package repository:
+
+- `link-canonical/` - Core library (URL canonicalization)
+- `link-canonical-effectful/` - Effectful integration
+
 ## Development Commands
 
 ```bash
-nix develop        # Enter dev shell
-cabal build        # Build the project
-cabal test         # Run tests
+nix develop          # Enter dev shell
+cabal build all      # Build all packages
+cabal test all       # Run all tests
 ```
 
 ## Before Committing
@@ -40,15 +47,18 @@ This runs treefmt which applies:
 
 ## Project Structure
 
-- `src/Link/Canonical/` - Main library code
-  - `Canonical.hs` - Entry point, exports public API
-  - `Types.hs` - Core types (NormConfig, NormResult, etc.)
-  - `Normalize.hs` - Generic URL normalization
-  - `Redirect.hs` - Redirect chain resolution
-  - `Tracking.hs` - Tracking parameter removal
-  - `Rules/` - Domain-specific rules (YouTube.hs, Amazon.hs, etc.)
-- `test/` - Test suite using Tasty
-- `docs/architecture/v1.md` - Detailed technical specification
+- `link-canonical/` - Core library
+  - `src/Link/Canonical/` - Main library code
+    - `Canonical.hs` - Entry point, exports public API
+    - `Types.hs` - Core types (NormConfig, NormResult, etc.)
+    - `Normalize.hs` - Generic URL normalization
+    - `Redirect.hs` - Redirect chain resolution
+    - `Tracking.hs` - Tracking parameter removal
+    - `Rules/` - Domain-specific rules (YouTube.hs, Amazon.hs, etc.)
+  - `test/` - Test suite using Tasty
+  - `docs/architecture/v1.md` - Detailed technical specification
+- `link-canonical-effectful/` - Effectful integration
+  - `src/` - Effectful effects and handlers
 
 ## Code Style
 
